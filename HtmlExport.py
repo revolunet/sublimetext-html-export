@@ -15,6 +15,7 @@ LANGUAGES = {
     'html': 'htmlmixed',
     'htm': 'htmlmixed',
     'js': 'javascript',
+    'json': 'javascript',
     'less': 'less',
     'lua': 'lua',
     'md': 'markdown',
@@ -79,7 +80,7 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
                 <title>%(title)s</title>
                 <script>%(js)s</script>
                 <style>%(css)s</style>
-                <style>.CodeMirror-scroll {overflow:visible}</style>
+                <style>.CodeMirror-scroll {height: auto; overflow: visible;}</style>
               </head>
               <body>
                 <h3>%(title)s</h3>
