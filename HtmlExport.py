@@ -30,7 +30,7 @@ LANGUAGES = {
 }
 
 DEPENDENCIES = {
-    'php': ['xml', 'javascript', 'css'],
+    'php': ['xml', 'javascript', 'css', 'clike'],
     'markdown': ['xml'],
     'htmlmixed': ['xml', 'javascript', 'css']
 }
@@ -43,6 +43,8 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
         encoding = self.view.encoding()
         if encoding == 'Undefined':
             encoding = 'UTF-8'
+        elif encoding == 'Western (Windows 1252)':
+            encoding = 'windows-1252'
         contents = self.view.substr(region)
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html')
         tmp_html.write('<meta charset="%s">' % self.view.encoding())
@@ -56,9 +58,8 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
             filename = 'unamed file'
         js = open(os.path.join(plugin_dir, 'codemirror', 'lib', 'codemirror.js'), 'r').read()
         if language:
-            if DEPENDENCIES.get(language):
-                for dependency in DEPENDENCIES.get(language):
-                    js += open(os.path.join(plugin_dir, 'codemirror', 'mode', dependency, '%s.js' % dependency), 'r').read()
+            for dependency in DEPENDENCIES.get(language, []):
+                js += open(os.path.join(plugin_dir, 'codemirror', 'mode', dependency, '%s.js' % dependency), 'r').read()
             js += open(os.path.join(plugin_dir, 'codemirror', 'mode', language, '%s.js' % language), 'r').read()
         css = open(os.path.join(plugin_dir, 'codemirror', 'lib', 'codemirror.css'), 'r').read()
 
@@ -66,7 +67,8 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
              'title': os.path.basename(filename),
              'css': css,
              'js': js,
-             'code': contents
+             'code': contents,
+             'mode': language
         }
         # theme
         # <link rel="stylesheet" href="../theme/elegant.css">
@@ -84,7 +86,8 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
                 <textarea id="code" name="code">%(code)s</textarea>
                 <script>
                 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                    lineNumbers: true
+                    lineNumbers: true,
+                    mode: "%(mode)s"
                 });
                 </script>
               </body>
