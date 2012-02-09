@@ -49,7 +49,13 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
         contents = self.view.substr(region)
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html')
         tmp_html.write('<meta charset="%s">' % self.view.encoding())
-        plugin_dir = os.path.join(sublime.packages_path(), 'Html Export')
+        # package manager path
+        plugin_dir = os.path.join(sublime.packages_path(), 'HTML Export')
+        if not os.path.isdir(plugin_dir):
+            # git dir
+            plugin_dir = os.path.join(sublime.packages_path(), 'sublimetext-html-export')
+            if not os.path.isdir(plugin_dir):
+                raise Exception("ERROR: cant find codemirror dir !")
         filename = self.view.file_name()
         language = None
         if filename:
