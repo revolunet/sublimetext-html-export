@@ -31,7 +31,9 @@ Support many syntaxes thanks to [CodeMirror 2][0]
 
 The code is available at github [https://github.com/revolunet/sublimetext-html-export][2]
 
+Licence MIT : [http://revolunet.mit-license.org][4]
 
  [0]: https://github.com/marijnh/CodeMirror2
  [2]: https://github.com/revolunet/sublimetext-markdown-preview
  [3]: http://wbond.net/sublime_packages/package_control
+ [4]: http://revolunet.mit-license.org
