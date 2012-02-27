@@ -10,8 +10,9 @@ Support many syntaxes thanks to [CodeMirror 2][0]
 
 **Installation :**
 
- - `cmd+shift+P` then `Packages: add repository` then enter `https://github.com/revolunet/sublimetext-html-export`
- - in a few days, you should use [sublime package manager][3]
+ - you should use [sublime package manager][3]
+ - use `cmd+shift+P` then `Package Control: Install Package`
+ - look for `Html Export` and install it.
  
 
 **Usage :**
