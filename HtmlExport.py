@@ -47,6 +47,7 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
         elif encoding == 'Western (Windows 1252)':
             encoding = 'windows-1252'
         contents = self.view.substr(region)
+        contents = contents.replace('<', '&lt;').replace('>', '&gt;')
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html')
         tmp_html.write('<meta charset="%s">' % self.view.encoding())
         # package manager path
