@@ -29,7 +29,7 @@ Support many syntaxes thanks to [CodeMirror 2][0]
 
 **Todo :**
 
- - Selectable theme
+ - ~~Selectable theme~~
  - Export and publish
 
 The code is available at github [https://github.com/revolunet/sublimetext-html-export][2]
