@@ -2,6 +2,9 @@ import sublime, sublime_plugin
 import webbrowser
 import tempfile
 import os
+import json
+
+settings = sublime.load_settings('HtmlExport.sublime-settings')
 
 LANGUAGES = {
     'c': 'clike',
@@ -71,15 +74,29 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
             js += open(os.path.join(plugin_dir, 'codemirror', 'mode', language, '%s.js' % language), 'r').read()
         css = open(os.path.join(plugin_dir, 'codemirror', 'lib', 'codemirror.css'), 'r').read()
 
+        editorConfig = {
+            'mode': language,
+            'lineNumbers': True
+        }
+
+        user_editorConfig = settings.get('editorConfig')
+        if user_editorConfig and isinstance(user_editorConfig, dict):
+            editorConfig.update(user_editorConfig)
+
+        theme = editorConfig.get('theme')
+        if theme:
+            theme_css = os.path.join(plugin_dir, 'codemirror', 'theme', '%s.css' % theme)
+            if os.path.isfile(theme_css):
+                css += open(theme_css, 'r').read()
+
         datas = {
              'title': os.path.basename(filename),
              'css': css,
              'js': js,
              'code': contents,
-             'mode': language
+             'editorConfig': json.dumps(editorConfig)
         }
-        # theme
-        # <link rel="stylesheet" href="../theme/elegant.css">
+
         html = u"""
             <!doctype html>
             <html>
@@ -93,10 +110,7 @@ class HtmlExportCommand(sublime_plugin.TextCommand):
                 <h3>%(title)s</h3>
                 <textarea id="code" name="code">%(code)s</textarea>
                 <script>
-                var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-                    lineNumbers: true,
-                    mode: "%(mode)s"
-                });
+                var editor = CodeMirror.fromTextArea(document.getElementById("code"), %(editorConfig)s);
                 </script>
               </body>
             </html>

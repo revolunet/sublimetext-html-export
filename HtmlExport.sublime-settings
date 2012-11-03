@@ -1,0 +1,17 @@
+/*
+    HTML Export default settings
+*/
+{
+    /*
+        Sets the default CodeMirror option. see http://codemirror.net/doc/manual.html
+
+        theme can be one of : cobalt, eclipse, elegant, monokai, neat, night, rubyblue
+    */
+    "editorConfig": {
+        "lineNumbers": true,
+        "theme": "elegant"
+    }
+
+}
+
+

@@ -13,12 +13,14 @@ Support many syntaxes thanks to [CodeMirror 2][0]
  - you should use [sublime package manager][3]
  - use `cmd+shift+P` then `Package Control: Install Package`
  - look for `Html Export` and install it.
- 
+
 
 **Usage :**
 
  - use `cmd+shift+P` then `Html Export` to export the current file
  - or bind some key in your user key binding
+ - in your HTML Export user settings, customize your codeMirror configuration if needed (lineNumbers, theme...)
+
 
 **Uses :**
 
